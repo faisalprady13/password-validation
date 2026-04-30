@@ -69,17 +69,42 @@ public final class PasswordValidator {
 
     // Bonus:
     public static boolean containsSpecialChar(String password, String allowed) {
-        boolean result = false;
-        if (password != null && !password.isEmpty()) {
-            Pattern pattern = Pattern.compile("[" + allowed + "]");
-            Matcher matcher = pattern.matcher(password);
 
-            if (matcher.find()) {
-                result = true;
+        //without regex
+        boolean result = false;
+
+        if (password != null && !password.isEmpty()) {
+            for (int i = 0; i < password.length(); i++) {
+                boolean found = false;
+                for (int j = 0; j < allowed.length(); j++) {
+                    if (password.charAt(i) == allowed.charAt(j)) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found) {
+                    result = true;
+                    break;
+                }
+                ;
             }
         }
 
         return result;
+
+        // regex
+//        boolean result = false;
+//        if (password != null && !password.isEmpty()) {
+//            Pattern pattern = Pattern.compile("[" + allowed + "]");
+//            Matcher matcher = pattern.matcher(password);
+//
+//            if (matcher.find()) {
+//                result = true;
+//            }
+//        }
+//
+//        return result;
     }
 
 }
