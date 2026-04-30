@@ -1,4 +1,6 @@
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class PasswordValidator {
     static final Set<String> commonPasswords = Set.of("password", "Passwort1", "12345678", "Aa345678");
@@ -58,12 +60,26 @@ public final class PasswordValidator {
     // Optional:
     public static boolean isValid(String password) // uses the checks above
     {
-        return !isCommonPassword(password) && containsUpperAndLower(password) && containsDigit(password) && hasMinLength(password, 8);
+        return containsSpecialChar(password, "!@#$%^&*()-_+=?.,;:") &&
+                !isCommonPassword(password) &&
+                containsUpperAndLower(password) &&
+                containsDigit(password) &&
+                hasMinLength(password, 8);
     }
 
     // Bonus:
     public static boolean containsSpecialChar(String password, String allowed) {
-        return false;
+        boolean result = false;
+        if (password != null && !password.isEmpty()) {
+            Pattern pattern = Pattern.compile("[" + allowed + "]");
+            Matcher matcher = pattern.matcher(password);
+
+            if (matcher.find()) {
+                result = true;
+            }
+        }
+
+        return result;
     }
 
 }
