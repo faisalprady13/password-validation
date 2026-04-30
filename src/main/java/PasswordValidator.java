@@ -44,14 +44,15 @@ public final class PasswordValidator {
         return password == null || commonPasswords.contains(password);
     }
 
+    // Optional:
+    public static boolean isValid(String password) // uses the checks above
+    {
+        return !isCommonPassword(password) && containsUpperAndLower(password) && containsDigit(password) && hasMinLength(password, 8);
+    }
+
     // Bonus:
     public static boolean containsSpecialChar(String password, String allowed) {
         return false;
     }
 
-    // Optional:
-    public static boolean isValid(String password) // uses the checks above
-    {
-        return false;
-    }
 }

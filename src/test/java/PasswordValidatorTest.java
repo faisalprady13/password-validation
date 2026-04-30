@@ -30,11 +30,15 @@ class PasswordValidatorTest {
         assertEquals(expected, PasswordValidator.isCommonPassword(password));
     }
 
+    @ParameterizedTest
+    @CsvSource({"Abc1def,false", "Abc1defg,true", "Abcdefgh,false", "abcdefg1,false", "ABCDEFG1,false", "Passwort1," +
+            "false", "Abcdef1g,true", "'    x    ',false", ",false"})
+    void isValid(String password, boolean expected) {
+        assertEquals(expected, PasswordValidator.isValid(password));
+    }
+
     @Test
     void containsSpecialChar() {
     }
 
-    @Test
-    void isValid() {
-    }
 }
