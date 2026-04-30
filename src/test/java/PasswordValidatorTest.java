@@ -12,8 +12,10 @@ class PasswordValidatorTest {
         assertEquals(expected, PasswordValidator.hasMinLength(password, 8));
     }
 
-    @Test
-    void containsDigit() {
+    @ParameterizedTest
+    @CsvSource({"asd,false", "asd1,true", "asd1qwe2,true", "'1',true", ",false",})
+    void containsDigit(String password, boolean expected) {
+        assertEquals(expected, PasswordValidator.containsDigit(password));
     }
 
     @Test

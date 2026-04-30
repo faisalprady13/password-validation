@@ -4,7 +4,17 @@ public final class PasswordValidator {
     }
 
     public static boolean containsDigit(String password) {
-        return false;
+        // without regex
+        boolean result = false;
+        if (password != null) {
+            for (int i = 0; i < password.length(); i++) {
+                if (Character.isDigit(password.charAt(i))) {
+                    result = true;
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
     public static boolean containsUpperAndLower(String password) {
