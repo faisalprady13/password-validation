@@ -1,4 +1,8 @@
+import java.util.Set;
+
 public final class PasswordValidator {
+    static final Set<String> commonPasswords = Set.of("password", "Passwort1", "12345678", "Aa345678");
+
     public static boolean hasMinLength(String password, int min) {
         return (password != null && password.replaceAll("\\s+", "").length() >= min);
     }
@@ -37,7 +41,7 @@ public final class PasswordValidator {
 
     public static boolean isCommonPassword(String password) // small internal list
     {
-        return false;
+        return password == null || commonPasswords.contains(password);
     }
 
     // Bonus:

@@ -24,8 +24,10 @@ class PasswordValidatorTest {
         assertEquals(expected, PasswordValidator.containsUpperAndLower(password));
     }
 
-    @Test
-    void isCommonPassword() {
+    @ParameterizedTest
+    @CsvSource({"password,true", "Passwort1,true", "12345678,true", "Aa345678,true", ",true", "thisIsUncommon,false"})
+    void isCommonPassword(String password, boolean expected) {
+        assertEquals(expected, PasswordValidator.isCommonPassword(password));
     }
 
     @Test
