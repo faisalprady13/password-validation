@@ -13,13 +13,15 @@ class PasswordValidatorTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"asd,false", "asd1,true", "asd1qwe2,true", "'1',true", ",false",})
+    @CsvSource({"asd,false", "asd1,true", "asd1qwe2,true", "'1',true", "'',false", ",false",})
     void containsDigit(String password, boolean expected) {
         assertEquals(expected, PasswordValidator.containsDigit(password));
     }
 
-    @Test
-    void containsUpperAndLower() {
+    @ParameterizedTest
+    @CsvSource({"asd,false", "Asd,true", "ASD,false", "'1',false", "'',false", ",false",})
+    void containsUpperAndLower(String password, boolean expected) {
+        assertEquals(expected, PasswordValidator.containsUpperAndLower(password));
     }
 
     @Test
