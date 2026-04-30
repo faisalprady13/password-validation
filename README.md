@@ -1,4 +1,3 @@
-
 **Must-have criteria (baseline):**
 
 -   Minimum  **8 characters**.
@@ -10,3 +9,7 @@
 
 -   At least  **one special character**  (define allowed set).
 -   Minimum number of distinct character groups (e.g., 3 of 4: upper, lower, digit, special).
+
+**Build & run**
+-   local:  `mvn clean verify`
+-   artifact:  `mvn package`  →  `target/*.jar`
