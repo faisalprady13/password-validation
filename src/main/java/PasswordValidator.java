@@ -1,6 +1,6 @@
 public final class PasswordValidator {
     public static boolean hasMinLength(String password, int min) {
-        return false;
+        return (password != null && password.replaceAll("\\s+", "").length() >= min);
     }
 
     public static boolean containsDigit(String password) {
