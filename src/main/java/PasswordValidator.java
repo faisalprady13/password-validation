@@ -41,7 +41,18 @@ public final class PasswordValidator {
 
     public static boolean isCommonPassword(String password) // small internal list
     {
-        return password == null || commonPasswords.contains(password);
+        boolean result = false;
+        if (password == null) {
+            result = true;
+        } else {
+            for (String commonPass : commonPasswords) {
+                if (commonPass.trim().equalsIgnoreCase(password.trim())) {
+                    result = true;
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
     // Optional:
