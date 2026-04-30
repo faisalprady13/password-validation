@@ -1,4 +1,6 @@
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class PasswordValidator {
     static final Set<String> commonPasswords = Set.of("password", "Passwort1", "12345678", "Aa345678");
@@ -22,21 +24,35 @@ public final class PasswordValidator {
     }
 
     public static boolean containsUpperAndLower(String password) {
-        // without regex
-        boolean hasUppercase = false;
+        return containsUppercase(password) && containsLowercase((password));
+    }
+
+    public static boolean containsLowercase(String password) {
         boolean hasLowercase = false;
         if (password != null) {
             for (int i = 0; i < password.length(); i++) {
                 char current = password.charAt(i);
                 if (Character.isLowerCase(current)) {
                     hasLowercase = true;
-                } else if (Character.isUpperCase(current)) {
-                    hasUppercase = true;
+                    break;
                 }
-                if (hasLowercase && hasUppercase) break;
             }
         }
-        return hasLowercase && hasUppercase;
+        return hasLowercase;
+    }
+
+    public static boolean containsUppercase(String password) {
+        boolean hasUppercase = false;
+        if (password != null) {
+            for (int i = 0; i < password.length(); i++) {
+                char current = password.charAt(i);
+                if (Character.isUpperCase(current)) {
+                    hasUppercase = true;
+                    break;
+                }
+            }
+        }
+        return hasUppercase;
     }
 
     public static boolean isCommonPassword(String password) // small internal list
@@ -58,12 +74,62 @@ public final class PasswordValidator {
     // Optional:
     public static boolean isValid(String password) // uses the checks above
     {
-        return !isCommonPassword(password) && containsUpperAndLower(password) && containsDigit(password) && hasMinLength(password, 8);
+        int passedRuleCount = 0;
+        if (containsSpecialChar(password, "!@#$%^&*()-_+=?.,;:")) {
+            passedRuleCount += 1;
+        }
+        if (containsDigit(password)) {
+            passedRuleCount += 1;
+        }
+        if (containsUppercase(password)) {
+            passedRuleCount += 1;
+        }
+        if (containsLowercase(password)) {
+            passedRuleCount += 1;
+        }
+        return passedRuleCount >= 3 &&
+                !isCommonPassword(password) &&
+                hasMinLength(password, 8);
     }
 
     // Bonus:
     public static boolean containsSpecialChar(String password, String allowed) {
-        return false;
+
+        //without regex
+        boolean result = false;
+
+        if (password != null && !password.isEmpty()) {
+            for (int i = 0; i < password.length(); i++) {
+                boolean found = false;
+                for (int j = 0; j < allowed.length(); j++) {
+                    if (password.charAt(i) == allowed.charAt(j)) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found) {
+                    result = true;
+                    break;
+                }
+                ;
+            }
+        }
+
+        return result;
+
+        // regex
+//        boolean result = false;
+//        if (password != null && !password.isEmpty()) {
+//            Pattern pattern = Pattern.compile("[" + allowed + "]");
+//            Matcher matcher = pattern.matcher(password);
+//
+//            if (matcher.find()) {
+//                result = true;
+//            }
+//        }
+//
+//        return result;
     }
 
 }

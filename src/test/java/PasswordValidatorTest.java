@@ -37,8 +37,10 @@ class PasswordValidatorTest {
         assertEquals(expected, PasswordValidator.isValid(password));
     }
 
-    @Test
-    void containsSpecialChar() {
+    @ParameterizedTest
+    @CsvSource({"password$,true", "Passwo%$#$#rt1,true", "asdasdasd,false", "'',false", ",false"})
+    void containsSpecialChar(String password, boolean expected) {
+        assertEquals(expected, PasswordValidator.containsSpecialChar(password, "!@#$%^&*()-_+=?.,;:"));
     }
 
 }
